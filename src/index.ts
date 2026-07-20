@@ -1,5 +1,5 @@
 import 'dotenv/config';
-
+import { logger } from "./core/logger/logger";
 import { Client, GatewayIntentBits } from 'discord.js';
 
 const client = new Client({
@@ -12,7 +12,7 @@ const client = new Client({
 });
 
 client.once('ready', () => {
-    console.log(`🤖 ${client.user?.tag} is online!`);
+    logger.info(`🤖 ${client.user?.tag} is online!`);
 });
 
 client.login(process.env.DISCORD_TOKEN);
