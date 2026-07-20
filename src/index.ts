@@ -1,7 +1,10 @@
-import 'dotenv/config';
-import { logger } from "./core/logger/logger";
-import { Client, GatewayIntentBits } from 'discord.js';
+import "dotenv/config";
+
+import { Client, GatewayIntentBits } from "discord.js";
+
 import { config } from "./core/config/config";
+import { connectDatabase } from "./core/database/database";
+import { logger } from "./core/logger/logger";
 
 const client = new Client({
     intents: [
@@ -12,8 +15,14 @@ const client = new Client({
     ],
 });
 
-client.once('ready', () => {
-    logger.info(`🤖 ${client.user?.tag} is online!`);
+client.once("clientReady", () => {
+        logger.info(`🤖 ${client.user?.tag} is online!`);
 });
 
-client.login(config.discord.token);
+async function bootstrap() {
+    await connectDatabase();
+
+    await client.login(config.discord.token);
+}
+
+bootstrap();
