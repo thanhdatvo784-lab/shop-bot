@@ -8,26 +8,23 @@ const orderSchema = new Schema<OrderDocument>(
             required: true,
             unique: true,
         },
+
         userId: {
             type: String,
             required: true,
-            index: true,
         },
+
         productId: {
             type: String,
             required: true,
-            index: true,
         },
-        quantity: {
-            type: Number,
-            required: true,
-            min: 1,
-        },
-        totalPrice: {
+
+        price: {
             type: Number,
             required: true,
             min: 0,
         },
+
         status: {
             type: String,
             enum: Object.values(OrderStatus),
