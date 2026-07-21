@@ -3,6 +3,7 @@ import { Document } from "mongoose";
 export enum ProductStatus {
     ACTIVE = "ACTIVE",
     INACTIVE = "INACTIVE",
+    DELETED = "DELETED",
 }
 
 export interface Product {

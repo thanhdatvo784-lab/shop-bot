@@ -1,3 +1,4 @@
+// product.model.ts
 import { Schema, model } from "mongoose";
 import { ProductDocument, ProductStatus } from "./product.types";
 

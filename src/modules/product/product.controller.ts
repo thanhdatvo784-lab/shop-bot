@@ -1,3 +1,4 @@
+//product.controller.ts
 import { productService } from "./product.service";
 import { Product } from "./product.types";
 

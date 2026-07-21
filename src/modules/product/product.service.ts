@@ -1,3 +1,4 @@
+// product.service.ts
 import { productRepository } from "./product.repository";
 import { Product, ProductStatus } from "./product.types";
 import { IdGenerator } from "../../core/id/id-generator";
