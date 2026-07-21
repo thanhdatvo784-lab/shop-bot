@@ -21,9 +21,7 @@ export class ProfileService {
         return profile;
     }
 
-    async addBalance(discordId: string, amount: number) {
-        return profileRepository.addBalance(discordId, amount);
-    }
+   
 }
 
 export const profileService = new ProfileService();

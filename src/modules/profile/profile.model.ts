@@ -12,10 +12,7 @@ const profileSchema = new Schema(
             type: String,
             required: true,
         },
-        balance: {
-            type: Number,
-            default: 0,
-        },
+       
         role: {
             type: String,
             enum: Object.values(UserRole),

@@ -22,13 +22,7 @@ export class ProfileRepository {
         );
     }
 
-    async addBalance(discordId: string, amount: number) {
-        return ProfileModel.findOneAndUpdate(
-            { discordId },
-            { $inc: { balance: amount } },
-            { new: true }
-        );
-    }
+   
 }
 
 export const profileRepository = new ProfileRepository();
