@@ -18,9 +18,7 @@ export class CreditRepository {
         );
     }
 
-    async delete(userId: string) {
-        return CreditModel.findOneAndDelete({ userId });
-    }
+   
 }
 
 export const creditRepository = new CreditRepository();
