@@ -2,20 +2,27 @@ import { readdir } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-export async function loadFiles(directory: string) {
-    const files = await readdir(directory);
+export async function loadFiles(directory: string): Promise<any[]> {
+    const entries = await readdir(directory, {
+        withFileTypes: true,
+    });
 
-    const modules = [];
+    const modules: any[] = [];
 
-    for (const file of files) {
-        if (!file.endsWith(".ts") && !file.endsWith(".js")) {
+    for (const entry of entries) {
+        const fullPath = path.join(directory, entry.name);
+
+        if (entry.isDirectory()) {
+            modules.push(...await loadFiles(fullPath));
             continue;
         }
 
-        const filePath = path.join(directory, file);
+        if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".js")) {
+            continue;
+        }
 
         modules.push(
-            await import(pathToFileURL(filePath).href)
+            await import(pathToFileURL(fullPath).href)
         );
     }
 
