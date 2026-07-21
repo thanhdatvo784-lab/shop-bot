@@ -4,7 +4,7 @@ import { Client, GatewayIntentBits } from "discord.js";
 
 import { config } from "./core/config/config";
 import { connectDatabase } from "./core/database/database";
-import { logger } from "./core/logger/logger";
+import { loadEvents } from "./core/loaders/event-loader";
 
 const client = new Client({
     intents: [
@@ -15,12 +15,10 @@ const client = new Client({
     ],
 });
 
-client.once("clientReady", () => {
-        logger.info(`🤖 ${client.user?.tag} is online!`);
-});
-
 async function bootstrap() {
     await connectDatabase();
+
+    await loadEvents(client);
 
     await client.login(config.discord.token);
 }
