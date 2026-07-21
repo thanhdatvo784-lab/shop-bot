@@ -1,12 +1,11 @@
 import { orderService } from "./order.service";
+import { Order } from "./order.types";
 
 export class OrderController {
     async create(
-        userId: string,
-        productId: string,
-        quantity: number
+        data: Omit<Order, "orderId" | "status">
     ) {
-        return orderService.create(userId, productId, quantity);
+        return orderService.create(data);
     }
 
     async findByOrderId(orderId: string) {
@@ -17,12 +16,12 @@ export class OrderController {
         return orderService.findByUserId(userId);
     }
 
-    async complete(orderId: string) {
-        return orderService.complete(orderId);
+    async update(orderId: string, data: Partial<Order>) {
+        return orderService.update(orderId, data);
     }
 
-    async cancel(orderId: string) {
-        return orderService.cancel(orderId);
+    async refund(orderId: string) {
+        return orderService.refund(orderId);
     }
 }
 

@@ -11,23 +11,31 @@ export class OrderRepository {
     }
 
     async findByUserId(userId: string) {
-        return OrderModel.find({ userId });
-    }
-
-    async findByStatus(status: OrderStatus) {
-        return OrderModel.find({ status });
+        return OrderModel.find({ userId }).sort({
+            createdAt: -1,
+        });
     }
 
     async update(orderId: string, data: Partial<Order>) {
         return OrderModel.findOneAndUpdate(
             { orderId },
             data,
-            { new: true }
+            {
+                new: true,
+            }
         );
     }
 
     async delete(orderId: string) {
-        return OrderModel.findOneAndDelete({ orderId });
+        return OrderModel.findOneAndUpdate(
+            { orderId },
+            {
+                status: OrderStatus.REFUNDED,
+            },
+            {
+                new: true,
+            }
+        );
     }
 }
 
