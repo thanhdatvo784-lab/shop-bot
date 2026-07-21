@@ -6,6 +6,7 @@ import {
 
 import { Command } from "../core/structures/command";
 import { profileController } from "../modules/profile/profile.controller";
+import { creditController } from "../modules/credit/credit.controller";
 
 const command: Command = {
     data: new SlashCommandBuilder()
@@ -17,6 +18,9 @@ const command: Command = {
             interaction.user.id,
             interaction.user.username
         );
+        const credit = await creditController.findByUserId(
+    interaction.user.id
+);
 
         const embed = new EmbedBuilder()
             .setTitle("👤 Hồ sơ người dùng")
@@ -24,7 +28,7 @@ const command: Command = {
             .addFields(
                 {
                     name: "Tên",
-                    value: profile.username,
+                    value: profile.username, 
                     inline: true,
                 },
                 {
@@ -32,6 +36,11 @@ const command: Command = {
                     value: profile.discordId,
                     inline: true,
                 },
+                {
+    name: "💰 Credit",
+    value: credit.balance.toLocaleString(),
+    inline: true,
+},
                 {
                     name: "Vai trò",
                     value: profile.role,

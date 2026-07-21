@@ -16,8 +16,14 @@ export class CreditService {
     }
 
     async findByUserId(userId: string) {
-        return creditRepository.findByUserId(userId);
+    let credit = await creditRepository.findByUserId(userId);
+
+    if (!credit) {
+        credit = await this.create(userId);
     }
+
+    return credit;
+}
 
     async deposit(userId: string, amount: number) {
         const credit = await creditRepository.findByUserId(userId);

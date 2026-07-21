@@ -17,6 +17,9 @@ export class ProfileService {
                 username
             );
         }
+        if (!profile) {
+    throw new Error("Failed to initialize profile");
+}
 
         return profile;
     }
