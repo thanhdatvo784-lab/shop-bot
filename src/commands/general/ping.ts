@@ -3,8 +3,7 @@ import {
     SlashCommandBuilder,
 } from "discord.js";
 
-import { Command } from "../core/structures/command";
-
+import { Command } from "../../core/structures/command";
 const command: Command = {
     data: new SlashCommandBuilder()
         .setName("ping")

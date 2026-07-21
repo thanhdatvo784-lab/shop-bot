@@ -4,9 +4,9 @@ import {
     SlashCommandBuilder,
 } from "discord.js";
 
-import { Command } from "../core/structures/command";
-import { profileController } from "../modules/profile/profile.controller";
-import { creditController } from "../modules/credit/credit.controller";
+import { profileController } from "../../modules/profile/profile.controller";
+import { creditController } from "../../modules/credit/credit.controller";
+import { Command } from "../../core/structures/command";
 
 const command: Command = {
     data: new SlashCommandBuilder()
