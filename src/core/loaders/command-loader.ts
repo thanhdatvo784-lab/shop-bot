@@ -1,23 +1,20 @@
 import { Collection } from "discord.js";
-import { readdir } from "node:fs/promises";
 import path from "node:path";
+
+import { loadFiles } from "../utils/file-loader";
 import { Command } from "../structures/command";
-import { pathToFileURL } from "node:url";
 
 export async function loadCommands() {
     const commands = new Collection<string, Command>();
 
-    const commandsPath = path.join(process.cwd(), "src", "commands");
+    const commandPath = path.join(process.cwd(), "src", "commands");
 
-    const files = await readdir(commandsPath);
+    const modules = await loadFiles(commandPath);
 
-    for (const file of files) {
-        if (!file.endsWith(".ts") && !file.endsWith(".js")) continue;
+    for (const module of modules) {
+        const command = module.default as Command;
 
-const filePath = path.join(commandsPath, file);
-
-const command = await import(pathToFileURL(filePath).href);
-        commands.set(command.default.data.name, command.default);
+        commands.set(command.data.name, command);
     }
 
     return commands;

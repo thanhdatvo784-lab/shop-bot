@@ -1,20 +1,14 @@
 import { Client } from "discord.js";
-import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+
+import { loadFiles } from "../utils/file-loader";
 
 export async function loadEvents(client: Client) {
     const eventsPath = path.join(process.cwd(), "src", "events");
 
-    const files = await readdir(eventsPath);
+    const modules = await loadFiles(eventsPath);
 
-    for (const file of files) {
-        if (!file.endsWith(".ts") && !file.endsWith(".js")) continue;
-
-        const filePath = path.join(eventsPath, file);
-
-const event = await import(pathToFileURL(filePath).href);
-
+    for (const event of modules) {
         if (event.once) {
             client.once(event.name, (...args) => event.execute(...args));
         } else {
