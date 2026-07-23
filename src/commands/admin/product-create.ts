@@ -6,12 +6,12 @@ import {
 
 import { Command } from "../../core/structures/command";
 import { productController } from "../../modules/product/product.controller";
+import { DeliveryType } from "../../modules/product/product.types";
 
 const command: Command = {
     data: new SlashCommandBuilder()
         .setName("product-create")
         .setDescription("Tạo sản phẩm mới")
-
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 
         .addStringOption(option =>
@@ -24,8 +24,25 @@ const command: Command = {
         .addStringOption(option =>
             option
                 .setName("description")
-                .setDescription("Mô tả")
+                .setDescription("Mô tả sản phẩm")
                 .setRequired(true)
+        )
+
+        .addStringOption(option =>
+            option
+                .setName("delivery")
+                .setDescription("Hình thức giao hàng")
+                .setRequired(true)
+                .addChoices(
+                    {
+                        name: "🤖 Tự động",
+                        value: DeliveryType.AUTO,
+                    },
+                    {
+                        name: "👤 Thủ công",
+                        value: DeliveryType.MANUAL,
+                    }
+                )
         )
 
         .addStringOption(option =>
@@ -38,31 +55,38 @@ const command: Command = {
         .addNumberOption(option =>
             option
                 .setName("price")
-                .setDescription("Giá")
+                .setDescription("Giá sản phẩm")
+                .setMinValue(0)
                 .setRequired(true)
         ),
 
     async execute(interaction: ChatInputCommandInteraction) {
-
         const name = interaction.options.getString("name", true);
         const description = interaction.options.getString("description", true);
+        const deliveryType = interaction.options.getString(
+            "delivery",
+            true
+        ) as DeliveryType;
         const category = interaction.options.getString("category", true);
         const price = interaction.options.getNumber("price", true);
 
         const product = await productController.create({
             name,
             description,
+            deliveryType,
             category,
             price,
         });
 
         await interaction.reply({
-            content:
-`✅ Đã tạo sản phẩm
+            content: `✅ Đã tạo sản phẩm thành công
 
-ID: ${product.productId}
-Tên: ${product.name}
-Giá: ${product.price.toLocaleString()} Credit`,
+🆔 ID: ${product.productId}
+📦 Tên: ${product.name}
+📝 Mô tả: ${product.description}
+📂 Danh mục: ${product.category}
+🚚 Giao hàng: ${product.deliveryType}
+💰 Giá: ${product.price.toLocaleString()} Credit`,
         });
     },
 };

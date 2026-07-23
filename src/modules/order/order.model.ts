@@ -30,6 +30,9 @@ const orderSchema = new Schema<OrderDocument>(
             enum: Object.values(OrderStatus),
             default: OrderStatus.PENDING,
         },
+        messageId: {
+            type: String,
+        },
     },
     {
         timestamps: true,

@@ -5,7 +5,10 @@ export enum ProductStatus {
     INACTIVE = "INACTIVE",
     DELETED = "DELETED",
 }
-
+export enum DeliveryType {
+    AUTO = "AUTO",
+    MANUAL = "MANUAL",
+}
 export interface Product {
     productId: string;
     name: string;
@@ -13,6 +16,7 @@ export interface Product {
     category: string;
     price: number;
     status: ProductStatus;
+    deliveryType: DeliveryType;
 }
 
 export interface ProductDocument extends Product, Document {}

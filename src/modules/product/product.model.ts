@@ -1,6 +1,6 @@
 // product.model.ts
 import { Schema, model } from "mongoose";
-import { ProductDocument, ProductStatus } from "./product.types";
+import { ProductDocument, ProductStatus, DeliveryType } from "./product.types";
 
 const productSchema = new Schema<ProductDocument>(
     {
@@ -9,6 +9,7 @@ const productSchema = new Schema<ProductDocument>(
             required: true,
             unique: true,
         },
+        
         name: {
             type: String,
             required: true,
@@ -32,11 +33,18 @@ const productSchema = new Schema<ProductDocument>(
             enum: Object.values(ProductStatus),
             default: ProductStatus.ACTIVE,
         },
+        deliveryType: {
+    type: String,
+    enum: Object.values(DeliveryType),
+    default: DeliveryType.AUTO,
+},
     },
-    {
+         {
         timestamps: true,
         versionKey: false,
-    }
+        }
+    
+    
 );
 
 export const ProductModel = model<ProductDocument>(

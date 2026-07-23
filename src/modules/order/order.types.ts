@@ -2,9 +2,9 @@ import { Document } from "mongoose";
 
 export enum OrderStatus {
     PENDING = "PENDING",
+    PROCESSING = "PROCESSING",
     COMPLETED = "COMPLETED",
-    FAILED = "FAILED",
-    REFUNDED = "REFUNDED",
+    CANCELLED = "CANCELLED",
 }
 
 export interface Order {
@@ -18,6 +18,18 @@ export interface Order {
 
     createdAt?: Date;
     updatedAt?: Date;
+    staffId?: string;
+
+    cancelReason?: string;
+
+    completedAt?: Date;
+
+    cancelledAt?: Date;
+    queueMessageId?: string;
+
+processingMessageId?: string;
+
+historyMessageId?: string;
 }
 
 export interface OrderDocument extends Order, Document {}

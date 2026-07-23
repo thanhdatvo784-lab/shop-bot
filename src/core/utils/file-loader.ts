@@ -21,9 +21,9 @@ export async function loadFiles(directory: string): Promise<any[]> {
             continue;
         }
 
-        modules.push(
-            await import(pathToFileURL(fullPath).href)
-        );
+        const module = await import(pathToFileURL(fullPath).href);
+
+        modules.push(module);
     }
 
     return modules;

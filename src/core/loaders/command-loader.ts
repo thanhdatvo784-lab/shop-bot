@@ -12,7 +12,18 @@ export async function loadCommands() {
     const modules = await loadFiles(commandPath);
 
     for (const module of modules) {
+
         const command = module.default as Command;
+
+        if (!command) {
+            console.warn("⚠️ Một command không có export default.");
+            continue;
+        }
+
+        if (!command.data) {
+            console.warn("⚠️ Command thiếu data:", module);
+            continue;
+        }
 
         commands.set(command.data.name, command);
     }
